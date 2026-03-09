@@ -1,0 +1,93 @@
+// Motor 1
+const int Motor1input1 = 5;
+const int Motor1input2 = 6;
+
+
+// Motor 2
+const int Motor2input1 = 10;
+const int Motor2input2 = 9;
+
+
+void setup() {
+  pinMode(Motor1input1, OUTPUT);
+  pinMode(Motor1input2, OUTPUT);
+  pinMode(Motor2input1, OUTPUT);
+  pinMode(Motor2input2, OUTPUT);
+
+
+  Serial.begin(9600);
+  Serial.println("Commandes : z = avancer | s = reculer | q = gauche | d = droite | x = stop");
+}
+
+
+// Fonctions pour bouger
+void avancer() {
+  digitalWrite(Motor1input1, HIGH);
+  digitalWrite(Motor1input2, LOW);
+  digitalWrite(Motor2input1, HIGH);
+  digitalWrite(Motor2input2, LOW);
+}
+
+
+void reculer() {
+  digitalWrite(Motor1input1, LOW);
+  digitalWrite(Motor1input2, HIGH);
+  digitalWrite(Motor2input1, LOW);
+  digitalWrite(Motor2input2, HIGH);
+}
+
+
+void tournerGauche() {
+  digitalWrite(Motor1input1, LOW);
+  digitalWrite(Motor1input2, HIGH);
+  digitalWrite(Motor2input1, HIGH);
+  digitalWrite(Motor2input2, LOW);
+}
+
+
+void tournerDroite() {
+  digitalWrite(Motor1input1, HIGH);
+  digitalWrite(Motor1input2, LOW);
+  digitalWrite(Motor2input1, LOW);
+  digitalWrite(Motor2input2, HIGH);
+}
+
+
+void stopMotors() {
+  digitalWrite(Motor1input1, LOW);
+  digitalWrite(Motor1input2, LOW);
+  digitalWrite(Motor2input1, LOW);
+  digitalWrite(Motor2input2, LOW);
+}
+
+
+void loop() {
+  if (Serial.available()) {
+    char cmd = Serial.read();
+
+
+    if (cmd == 'z') {
+      avancer();
+      Serial.println("Avance");
+    }
+    else if (cmd == 's') {
+      reculer();
+      Serial.println("Recule");
+    }
+    else if (cmd == 'q') {
+      tournerGauche();
+      Serial.println("Tourne à gauche");
+    }
+    else if (cmd == 'd') {
+      tournerDroite();
+      Serial.println("Tourne à droite");
+    }
+    else if (cmd == 'x') {
+      stopMotors();
+      Serial.println("Stop");
+    }
+  }
+}
+
+
+
