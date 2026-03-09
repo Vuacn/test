@@ -1,70 +1,86 @@
-// Motor 1
-const int Motor1input1 = 5;
-const int Motor1input2 = 6;
+// ENABLE (PWM)
+const int EN1 = 3;  
+const int EN2 = 11;  
 
+// Motor 1
+const int Motor1input1 = 10;
+const int Motor1input2 = 5;
 
 // Motor 2
-const int Motor2input1 = 10;
+const int Motor2input1 = 6;
 const int Motor2input2 = 9;
 
+int vitesse = 255;   // vitesse entre 0 et 255
 
+// ---------------------
 void setup() {
+  pinMode(EN1, OUTPUT);
+  pinMode(EN2, OUTPUT);
+
   pinMode(Motor1input1, OUTPUT);
   pinMode(Motor1input2, OUTPUT);
   pinMode(Motor2input1, OUTPUT);
   pinMode(Motor2input2, OUTPUT);
 
-
   Serial.begin(9600);
-  Serial.println("Commandes : z = avancer | s = reculer | q = gauche | d = droite | x = stop");
+  Serial.println("z=avant | s=arriere | q=gauche | d=droite | x=stop");
 }
 
-
-// Fonctions pour bouger
+// ---------------------
 void avancer() {
+  analogWrite(EN1, vitesse);
+  analogWrite(EN2, vitesse);
+
   digitalWrite(Motor1input1, HIGH);
   digitalWrite(Motor1input2, LOW);
   digitalWrite(Motor2input1, HIGH);
   digitalWrite(Motor2input2, LOW);
 }
-
 
 void reculer() {
+  analogWrite(EN1, vitesse);
+  analogWrite(EN2, vitesse);
+
   digitalWrite(Motor1input1, LOW);
   digitalWrite(Motor1input2, HIGH);
   digitalWrite(Motor2input1, LOW);
   digitalWrite(Motor2input2, HIGH);
 }
 
-
 void tournerGauche() {
+  analogWrite(EN1, vitesse);
+  analogWrite(EN2, vitesse);
+
   digitalWrite(Motor1input1, LOW);
   digitalWrite(Motor1input2, HIGH);
   digitalWrite(Motor2input1, HIGH);
   digitalWrite(Motor2input2, LOW);
 }
 
-
 void tournerDroite() {
+  analogWrite(EN1, vitesse);
+  analogWrite(EN2, vitesse);
+
   digitalWrite(Motor1input1, HIGH);
   digitalWrite(Motor1input2, LOW);
   digitalWrite(Motor2input1, LOW);
   digitalWrite(Motor2input2, HIGH);
 }
 
-
 void stopMotors() {
+  analogWrite(EN1, 0);
+  analogWrite(EN2, 0);
+
   digitalWrite(Motor1input1, LOW);
   digitalWrite(Motor1input2, LOW);
   digitalWrite(Motor2input1, LOW);
   digitalWrite(Motor2input2, LOW);
 }
 
-
+// ---------------------
 void loop() {
   if (Serial.available()) {
     char cmd = Serial.read();
-
 
     if (cmd == 'z') {
       avancer();
@@ -88,6 +104,4 @@ void loop() {
     }
   }
 }
-
-
 
